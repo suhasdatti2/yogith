@@ -7,7 +7,10 @@ node_modules/
 dist/
 
 # Preview & scratch artifacts
-preview-*.png
+preview-*
 sec-*.png
 how-*.png
+check-*.png
+final-*.png
+frames/
 *.log
