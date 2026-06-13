@@ -1,0 +1,13 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies / build
+node_modules/
+dist/
+
+# Preview & scratch artifacts
+preview-*.png
+sec-*.png
+how-*.png
+*.log

@@ -1,0 +1,10 @@
+<svg width="200" height="48" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Novora">
+  <defs>
+    <linearGradient id="logo-grad" x1="6" y1="8" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C6CFF"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+  </defs>
+  <path d="M24 6C25.2 18.6 29.4 22.8 42 24C29.4 25.2 25.2 29.4 24 42C22.8 29.4 18.6 25.2 6 24C18.6 22.8 22.8 18.6 24 6Z" fill="url(#logo-grad)"/>
+  <text x="54" y="32" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="26" font-weight="700" letter-spacing="-0.5" fill="#F5F7FA">Novora</text>
+</svg>

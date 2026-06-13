@@ -1,0 +1,12 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Novora">
+  <defs>
+    <linearGradient id="fav-grad" x1="12" y1="12" x2="88" y2="88" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C6CFF"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="92" height="92" rx="24" fill="#0A0B0F"/>
+  <rect x="4.5" y="4.5" width="91" height="91" rx="23.5" stroke="url(#fav-grad)" stroke-opacity="0.5"/>
+  <path d="M50 20C52 41 59 48 80 50C59 52 52 59 50 80C48 59 41 52 20 50C41 48 48 41 50 20Z" fill="url(#fav-grad)"/>
+  <path d="M75 22C75.9 31 78 33 87 34C78 35 75.9 37 75 46C74 37 71 35 62 34C71 33 74 31 75 22Z" fill="url(#fav-grad)" fill-opacity="0.75"/>
+</svg>
