@@ -447,9 +447,69 @@
     .scroll-card{transform:none!important}
     .scroll-head{transform:none!important}
   }
+
+  /* ---- immersive scroll-expand cover (vanilla ScrollExpandMedia) ---- */
+  .sem{overflow-x:hidden}
+  .sem-stage{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:100dvh}
+  .sem-shell{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;min-height:100dvh}
+  .sem-bg{position:absolute;inset:0;z-index:0;height:100%;will-change:opacity;
+    background:radial-gradient(60% 60% at 30% 20%,rgba(122,92,255,.35),transparent 70%),
+               radial-gradient(50% 50% at 80% 30%,rgba(46,217,255,.28),transparent 70%),
+               radial-gradient(50% 60% at 60% 85%,rgba(255,46,151,.22),transparent 70%),var(--base)}
+  .sem-bg img{width:100vw;height:100vh;object-fit:cover;object-position:center}
+  .sem-bg::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.10)}
+  .sem-center{position:relative;width:100%;height:100dvh;display:flex;align-items:center;justify-content:center;z-index:10}
+  .sem-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:0;border-radius:18px;
+    max-width:95vw;max-height:85vh;box-shadow:0 0 50px rgba(0,0,0,.3)}
+  .sem-media-inner{position:absolute;inset:0;border-radius:14px;overflow:hidden;
+    background:linear-gradient(90deg,var(--pink),var(--violet),var(--cyan),var(--mint),var(--amber));background-size:300% 100%;animation:spectrum 10s linear infinite}
+  .sem-media-inner video,.sem-media-inner img{width:100%;height:100%;object-fit:cover;display:block}
+  .sem-overlay{position:absolute;inset:0;background:#000;border-radius:14px;pointer-events:none}
+  .sem-mt{position:absolute;top:100%;left:0;right:0;margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+  .sem-date{font-size:clamp(16px,2.4vw,24px);color:#bfdbfe;font-weight:600;letter-spacing:.3px}
+  .sem-cue{color:#bfdbfe;font-weight:500;display:flex;align-items:center;justify-content:center;gap:8px}
+  .sem-cue .chev{display:inline-block;animation:bob 1.6s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+  .sem-title{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;text-align:center;mix-blend-mode:difference}
+  .sem-title h2{font-family:var(--display);font-weight:900;letter-spacing:-1px;color:#bfdbfe;font-size:clamp(2.3rem,7vw,4.2rem);line-height:1;will-change:transform}
+  .sem-hint{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:55;pointer-events:none;
+    font-size:12.5px;color:var(--muted);background:rgba(11,10,31,.6);backdrop-filter:blur(10px);
+    border:1px solid var(--line);padding:8px 16px;border-radius:999px;transition:opacity .4s}
+  @media(prefers-reduced-motion:reduce){.sem-cue .chev{display:none}}
 </style>
 </head>
 <body>
+
+  <!-- ===== IMMERSIVE SCROLL-EXPAND COVER ("Glow Different") ===== -->
+  <div class="sem" id="sem">
+    <section class="sem-stage">
+      <div class="sem-shell">
+        <div class="sem-bg" id="semBg">
+          <img id="semBgImg" alt="" aria-hidden="true"
+            src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1920&q=80"
+            onerror="this.style.display='none'">
+        </div>
+        <div class="sem-center">
+          <div class="sem-media" id="semMedia">
+            <div class="sem-media-inner" id="semMediaInner">
+              <!-- Animated spectrum cover. To use your product VIDEO instead, replace this comment with:
+                   <video autoplay muted loop playsinline poster="POSTER.jpg" src="YOUR-PRODUCT.mp4"></video> -->
+            </div>
+            <div class="sem-overlay" id="semOverlay"></div>
+            <div class="sem-mt">
+              <p class="sem-date" id="semDate">RGBIC Series</p>
+              <p class="sem-cue"><span>Scroll to expand</span><span class="chev">⌄</span></p>
+            </div>
+          </div>
+          <div class="sem-title" id="semTitle">
+            <h2 id="semTitleA">Glow</h2>
+            <h2 id="semTitleB">Different</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="sem-hint" id="semHint">Scroll to expand ✦</div>
 
   <div class="announce spectrum-bg">⚡ Free shipping today · <b>40% off ends tonight</b> · 30-day glow-up guarantee</div>
 
@@ -457,7 +517,6 @@
     <div class="wrap nav">
       <a class="logo" href="#" aria-label="Glowave home">Glow<span style="color:var(--cyan)">ave</span><span class="dot spectrum-bg"></span></a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="immersive.html">✦ Experience</a>
         <a href="#how">How it works</a>
         <a href="#scenes">Scenes</a>
         <a href="#features">Features</a>
@@ -465,7 +524,7 @@
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <button class="btn btn-primary spectrum-bg" onclick="goBuy()">Shop now</button>
+      <a href="#bundles" class="btn btn-primary spectrum-bg">Shop now</a>
     </div>
   </header>
 
@@ -478,10 +537,9 @@
         <h1>Your room, but it finally has a <span class="grad">personality.</span></h1>
         <p class="sub">App-controlled RGBIC LED strips that sync to your music, flow through 16 million colors, and turn a plain wall into the reason people screenshot your room.</p>
         <div class="hero-cta">
-          <button class="btn btn-primary spectrum-bg" onclick="goBuy()" style="padding:15px 30px;font-size:16px">Light it up — 40% off</button>
-          <a href="immersive.html" class="btn" style="background:transparent;color:var(--text);border:1px solid var(--line);box-shadow:none;padding:15px 26px;font-size:16px">▶ Immersive demo</a>
+          <a href="#bundles" class="btn btn-primary spectrum-bg" style="padding:15px 30px;font-size:16px">Light it up — 40% off</a>
+          <div class="price-tag"><s>$49.99</s> <b>from $29.99</b></div>
         </div>
-        <div class="price-tag" style="margin-top:14px"><s>$49.99</s> <b>from $29.99</b></div>
         <div class="trust">
           <span><span class="ic">✦</span> 50,000+ rooms upgraded</span>
           <span><span class="ic">✦</span> App + remote control</span>
@@ -710,7 +768,7 @@
           <h2>The same room. Lights off vs. Glowave on.</h2>
           <p class="lead">Wipe your cursor across the dark room and watch the color flood in — that's the exact difference one strip makes the second it's installed.</p>
           <div class="hero-cta" style="margin-top:24px">
-            <button class="btn btn-primary spectrum-bg" onclick="goBuy()" style="padding:14px 28px">Get the glow-up</button>
+            <a href="#bundles" class="btn btn-primary spectrum-bg" style="padding:14px 28px">Get the glow-up</a>
             <div class="price-tag"><s>$49.99</s> <b>from $29.99</b></div>
           </div>
         </div>
@@ -770,7 +828,7 @@
       </div>
 
       <div class="bundle-cta">
-        <button class="btn btn-primary spectrum-bg" onclick="goBuy()">Add to cart — <span id="selPrice">$49.99</span></button>
+        <a href="#bundles" class="btn btn-primary spectrum-bg">Add to cart — <span id="selPrice">$49.99</span></a>
         <div class="bundle-note">
           <span>🔒 Secure checkout</span><span>🚚 Free shipping</span><span>↩ 30-day returns</span>
         </div>
@@ -843,7 +901,7 @@
         <h2 style="font-size:clamp(28px,4.4vw,48px)">Stop scrolling past other people's rooms.</h2>
         <p class="lead">Build yours tonight. 40% off and free shipping end when the timer hits zero.</p>
         <div id="timer" style="font-family:var(--display);font-weight:900;font-size:30px;letter-spacing:1px;margin-bottom:26px"></div>
-        <button class="btn btn-primary spectrum-bg" onclick="goBuy()" style="padding:17px 44px;font-size:17px">Claim 40% off now</button>
+        <a href="#bundles" class="btn btn-primary spectrum-bg" style="padding:17px 44px;font-size:17px">Claim 40% off now</a>
       </div>
     </div>
   </section>
@@ -872,7 +930,7 @@
   <!-- STICKY MOBILE BUY BAR -->
   <div class="buybar">
     <div class="bp" id="barPrice">$49.99 <s>$99.98</s></div>
-    <button class="btn btn-primary spectrum-bg" onclick="goBuy()">Add to cart</button>
+    <a href="#bundles" class="btn btn-primary spectrum-bg">Add to cart</a>
   </div>
 
 <script>
@@ -885,7 +943,6 @@
     document.getElementById('selPrice').textContent = p;
     document.getElementById('barPrice').innerHTML = p + (was ? ' <s>'+was+'</s>' : '');
   }
-  function goBuy(){ document.getElementById('bundles').scrollIntoView({behavior:'smooth'}); }
 
   // sync the buy bar with whichever bundle starts active
   (function(){
@@ -1067,6 +1124,91 @@
 
     window.addEventListener('resize', resize);
     resize();
+  })();
+
+  // ---------- IMMERSIVE COVER: scroll-to-expand (vanilla ScrollExpandMedia) ----------
+  (function(){
+    var sem = document.getElementById('sem');
+    if(!sem) return;
+    var bg = document.getElementById('semBg');
+    var media = document.getElementById('semMedia');
+    var overlay = document.getElementById('semOverlay');
+    var dateEl = document.getElementById('semDate');
+    var cueEl = sem.querySelector('.sem-cue');
+    var titleA = document.getElementById('semTitleA');
+    var titleB = document.getElementById('semTitleB');
+    var hint = document.getElementById('semHint');
+
+    if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
+    window.scrollTo(0, 0);
+
+    var st = { progress:0, expanded:false, touchStartY:0, isMobile: window.innerWidth < 768 };
+    var hintHidden = false;
+    function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+
+    function render(){
+      var p = st.progress, isM = st.isMobile;
+      media.style.width  = (300 + p*(isM?650:1250)) + 'px';
+      media.style.height = (400 + p*(isM?200:400)) + 'px';
+      var tx = p*(isM?180:150);
+      titleA.style.transform = 'translateX(-' + tx + 'vw)';
+      titleB.style.transform = 'translateX(' + tx + 'vw)';
+      dateEl.style.transform = 'translateX(-' + tx + 'vw)';
+      cueEl.style.transform  = 'translateX(' + tx + 'vw)';
+      bg.style.opacity = String(1 - p);
+      overlay.style.opacity = String(0.5 - p*0.3);
+      if(!hintHidden){
+        if(st.expanded){ hint.textContent = 'Keep scrolling to enter the store ↓'; hint.style.opacity = '1'; }
+        else if(p > 0.02){ hint.style.opacity = '0'; }
+        else { hint.textContent = 'Scroll to expand ✦'; hint.style.opacity = '1'; }
+      }
+    }
+
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function onWheel(e){
+      if(st.expanded && e.deltaY < 0 && window.scrollY <= 5){
+        st.expanded = false; e.preventDefault(); render();
+      } else if(!st.expanded){
+        e.preventDefault();
+        st.progress = clamp(st.progress + e.deltaY * 0.0009, 0, 1);
+        if(st.progress >= 1){ st.expanded = true; }
+        render();
+      }
+    }
+    function onTouchStart(e){ st.touchStartY = e.touches[0].clientY; }
+    function onTouchMove(e){
+      if(!st.touchStartY) return;
+      var ty = e.touches[0].clientY, dy = st.touchStartY - ty;
+      if(st.expanded && dy < -20 && window.scrollY <= 5){
+        st.expanded = false; e.preventDefault(); render();
+      } else if(!st.expanded){
+        e.preventDefault();
+        st.progress = clamp(st.progress + dy * (dy < 0 ? 0.008 : 0.005), 0, 1);
+        if(st.progress >= 1){ st.expanded = true; }
+        st.touchStartY = ty; render();
+      }
+    }
+    function onTouchEnd(){ st.touchStartY = 0; }
+    function onScroll(){
+      if(!st.expanded){ window.scrollTo(0, 0); }
+      else if(!hintHidden && window.scrollY > 80){ hintHidden = true; hint.style.opacity = '0'; }
+    }
+    function onResize(){ st.isMobile = window.innerWidth < 768; render(); }
+
+    if(prefersReduced){
+      // no scroll-hijack: present expanded and let the page scroll normally into the store
+      st.progress = 1; st.expanded = true; hintHidden = true; hint.style.display = 'none'; render();
+      window.addEventListener('resize', onResize);
+    } else {
+      render();
+      window.addEventListener('wheel', onWheel, { passive:false });
+      window.addEventListener('scroll', onScroll, { passive:true });
+      window.addEventListener('touchstart', onTouchStart, { passive:false });
+      window.addEventListener('touchmove', onTouchMove, { passive:false });
+      window.addEventListener('touchend', onTouchEnd);
+      window.addEventListener('resize', onResize);
+    }
   })();
 </script>
 </body>

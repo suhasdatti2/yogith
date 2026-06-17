@@ -12,6 +12,7 @@ vanilla JS/CSS** rather than scaffolding a separate React project.
 
 | Source component (React) | Where it lives now | Section |
 |---|---|---|
+| `scroll-expansion-hero` (ScrollExpandMedia) | vanilla wheel/touch hijack that grows the media to fullscreen, then releases into the store | "Glow Different" cover at the top of the page |
 | `container-scroll-animation` (Framer Motion) | vanilla scroll handler → `rotateX`/`scale`/`translateY` | "See it in your space" 3D showcase (`#showcase`) |
 | `splite` + `spotlight` + `card` (Spline) | `<spline-viewer>` web component, lazy-loaded, + animated spotlight SVG | "Meet the app" (`#app3d`) |
 | `display-cards` (lucide-react) | CSS-only fanned/skewed stack | "Scenes" (`#scenes`) |
@@ -25,9 +26,18 @@ All animation respects `prefers-reduced-motion`.
 - **Spline 3D scene** — loaded from `unpkg.com` + `prod.spline.design`. If blocked,
   an animated spectrum orb shows instead. Swap the `url` in the lazy-loader for your
   own product scene.
-- **Unsplash photos** (showcase + reveal) — each `<img>` has an `onerror` fallback to
-  an on-brand gradient, so a 404 never shows a broken image. Replace these with real
-  product/room photography before launch.
+- **Unsplash photos** (cover background + showcase + reveal) — each `<img>` has an
+  `onerror` fallback to an on-brand gradient, so a 404 never shows a broken image.
+  Replace these with real product/room photography before launch.
+- **Cover media** — the "Glow Different" cover uses an animated spectrum gradient by
+  default (always works, no external file). To use a product video, drop a
+  `<video autoplay muted loop playsinline poster="…" src="your.mp4">` into
+  `#semMediaInner` (a commented snippet marks the spot).
+
+Everything is a single self-contained page: the immersive cover is the top of
+`index.html`, and scrolling past it flows straight into the store. All buttons and
+nav items are in-page anchor links (`#bundles`, `#faq`, …) — nothing navigates to a
+separate file.
 
 ## Customize
 
